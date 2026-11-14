@@ -1,6 +1,6 @@
 === Smart Flat Rate Shipping for WooCommerce ===
 Contributors: hplugin
-Tags: woocommerce, shipping, flat rate, free shipping, shipping rules
+Tags: woocommerce, shipping, flat rate shipping, conditional shipping, free shipping
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -11,22 +11,22 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Flat-rate shipping methods with per-item fees, free-shipping thresholds, product, category and location conditions, plus a simulator.
+Flat rate shipping for WooCommerce with conditional rules: per-item fees, free-shipping thresholds, product, category and location conditions.
 
 == Description ==
 
 **[Read the documentation](https://docs.wpallsolution.com/#/collection/sfrs-plugin)** – setup, conditions, the simulator and troubleshooting. Need help? **[Contact support](https://support.wpallsolution.com/)**.
 
-Smart Flat Rate Shipping adds one shipping method to WooCommerce that offers as many flat-rate options as you configure. Each option has a fee, optional conditions, and a priority.
+Smart Flat Rate Shipping is a flexible flat rate shipping plugin for WooCommerce. It adds one shipping method that offers as many flat-rate options as you configure. Each option has a fee, optional conditions and a priority, so you can set up conditional shipping rules (for example by cart total, quantity, product, category or destination) without writing code.
 
-**What you can do**
+**Key features**
 
 * Fixed fee, optional per-item fee, optional "free shipping from" subtotal.
 * Conditions: cart subtotal, cart quantity, products, product categories, destination country, state and postcode.
 * AND inside a group, OR between groups, with a readable summary in the list.
 * Shipping simulator: test a sample cart and destination without a real cart, order, payment or stock change. It uses the same pricing engine as checkout.
 * Diagnostics: environment checks and an optional, bounded log that explains why a method matched or not.
-* Works with WooCommerce shipping zones, taxes, multiple packages and native shipping methods. It never hides or changes other methods.
+* Works with WooCommerce shipping zones, taxes, multiple packages and native shipping methods, so it fits into your existing WooCommerce shipping setup. It never hides or changes other methods.
 * Documentation: [step-by-step guides](https://docs.wpallsolution.com/#/collection/sfrs-plugin) for every screen and condition.
 
 **How rates are calculated**
@@ -42,7 +42,7 @@ Cost = base fee + per-item fee x chargeable units. If the eligible subtotal reac
 
 **Not included (yet)**
 
-Weight, shipping-class and coupon conditions, formulas, scheduling, import/export, splitting a cost between products. Some of these (weight, shipping class, coupon, role and day/time conditions, tiered rates, import/export) are provided by the separate Smart Flat Rate Shipping Pro add-on. The free plugin makes no external requests and sends no data anywhere.
+Rate tables (table rate shipping style ranges), weight, shipping-class and coupon conditions, formulas, scheduling, import/export, splitting a cost between products. Some of these (weight, shipping class, coupon, role and day/time conditions, tiered range rates by quantity, weight or subtotal, import/export) are provided by the separate Smart Flat Rate Shipping Pro add-on. The free plugin makes no external requests and sends no data anywhere.
 
 == For developers ==
 
@@ -83,7 +83,13 @@ Add the "Smart Flat Rate" method to a shipping zone covering the customer's addr
 Yes. Each zone should contain it once. A second copy in the same zone is ignored to avoid duplicate options.
 
 = Do the cart and checkout blocks work? =
-The rates are produced by a standard WooCommerce shipping method, and the Store API used by the blocks returned them in testing with WooCommerce 11.2.1. The optional customer description is shown only in the classic cart and checkout.
+The rates are produced by a standard WooCommerce shipping method, and the Store API used by the blocks returned them in testing with WooCommerce 11.2.1. Since version 1.0.1 the optional customer description is shown in the Checkout Block too (it needs WooCommerce 9.2 or newer; older versions show it only in the classic checkout).
+
+= Can I set up conditional shipping rates? =
+Yes. Each method can have condition groups based on cart subtotal, cart quantity, products, product categories, and the destination country, state or postcode. Conditions inside a group must all match (AND); a method is offered when any of its groups matches (OR). The simulator shows which methods match a sample cart and why.
+
+= Is this a table rate shipping plugin? =
+No. The free plugin has no rate tables: each method is priced as a base fee plus an optional per-item fee, and you create several methods with different conditions for different carts. If you need rates that change by ranges of quantity, weight or subtotal, those tiered rates are part of the separate Smart Flat Rate Shipping Pro add-on.
 
 = Are taxes supported? =
 Each method can be taxable or not. Taxable methods use your WooCommerce shipping tax settings. Subtotal comparisons always exclude tax.
